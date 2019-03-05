@@ -28,13 +28,33 @@
       
 */
 
+// This variable will be used to set the initial value of the donation total which will be added onto later on
 var donationTotal = 0;
 
-donors.forEach(calcSum());
+// This variable will calculate the donors total
+donors.forEach(calcSum);
 
-var summaryTable = "<table><tr><th>Donors</th><td>" + donors.length + "</td></tr><tr><th>Total Donation</th><td>$" + donationTotal.toLocaleString() + "</td></tr></table>"
+// This variable will display the donor report at the top of the page with the total donations and number of donors
+var summaryTable = "<table><tr><th>Donors</th><td>" + donors.length + "</td></tr><tr><th>Total Donation</th><td>$" + donationTotal.toLocaleString() + "</td></tr></table>";
 
+// The summaryTable variable was called into the HTML page by using a specific element
 document.getElementById("donationSummary").innerHTML = summaryTable;
+
+// This variable will find the top donors using the callback function of findMajorDonors
+var majorDonors = donors.filter(findMajorDonors);
+
+// the majorDonors variable will be sorted in descending order 
+majorDonors.sort(donorSortDescending);
+
+// This variable will create a table with 7 different table headers.
+var donorTable = "<table><caption>Major Donors</caption><tr><th>Donation</th><th>Donor ID</th><th>Date</th><th>Name</th><th>Address</th><th>Phone</th><th>E-mail</th></tr>";
+
+majorDonors.forEach(writeDonorRow);
+
+donorTable += "</table>";
+
+// The donorTable variable was called into the HTML page by using an element with the id of donorTable
+document.getElementById("donorTable").innerHTML = donorTable;
 
 
 function calcSum(donorAmt) {
